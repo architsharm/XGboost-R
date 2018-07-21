@@ -10,7 +10,10 @@ library(readr)
 library(corrplot)
 library(rsconnect)
 library(Matrix)
-property<-read.csv("Data.csv",stringsAsFactors = F)
+
+source("custom_loss.R")
+source("custom_error.R")
+data1<-read.csv("Data.csv",stringsAsFactors = F)
 
 type<-unique(data1$type)%>%as.list()
 data12<-data.frame()
