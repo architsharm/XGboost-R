@@ -15,29 +15,24 @@ source("custom_loss.R")
 source("custom_error.R")
 data1<-read.csv("Data.csv",stringsAsFactors = F)
 
-type<-unique(data1$type)%>%as.list()
+
+
+f<-list("factor columns")
+n<-list("numeric columns")
+i1<-n[1]
+
+for (f_z in f){
+f1<-unique(data1$f_z)%>%as.list()
 data12<-data.frame()
-for(i in type){
-  temp<-filter(data1,data1$type==i)
-  l<-boxplot.stats(temp$area)$stats[1]
-  u<-boxplot.stats(temp$area)$stats[5]
-  temp<-filter(temp,!(temp$area<l|temp$area>u))
+for(i in f1){
+  temp<-filter(data1,data1$f_z==i)
+  l<-boxplot.stats(temp$i1)$stats[1]
+  u<-boxplot.stats(temp$i1)$stats[5]
+  temp<-filter(temp,!(temp$i1<l|temp$i1>u))
   data12<-rbind(data12,temp)
 }
-
-
-#Area-BHK outliers 
-bhk<-unique(data12$bhk)%>%as.list()
-data121<-data.frame()
-for(i in bhk){
-  temp<-filter(data12,data12$bhk==i)
-  l<-boxplot.stats(temp$area)$stats[1]
-  u<-boxplot.stats(temp$area)$stats[5]
-  temp<-filter(temp,!(temp$area<l|temp$area>u))
-  data121<-rbind(data121,temp)
+data1<-data12
 }
-
-data2<-data121
 
 # Find correlated variables so that not to confuse model
 t3<-select(data2,-rate,-source,-price,-city,-lat,-lon)
